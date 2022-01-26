@@ -5,8 +5,6 @@ console.clear();
 const model1 = document.querySelector("#model1");
 var renderer = new THREE.WebGLRenderer({ alpha: true, antialiase: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-// document.body.appendChild(renderer.domElement);
-// document.body.appendChild(renderer.domElement);
 model1.appendChild(renderer.domElement);
 
 //===================================================== scene
@@ -18,11 +16,11 @@ camera.position.z = 5;
 camera.position.y = 0;
 
 //===================================================== lights
-var light = new THREE.DirectionalLight(0xefefff, 3);
-light.position.set(1, 1, 1).normalize();
-scene.add(light);
-var light = new THREE.DirectionalLight(0xffefef, 3);
-light.position.set(-1, -1, -1).normalize();
+// var light = new THREE.DirectionalLight(0xefefff, 3);
+// light.position.set(1, 1, 1).normalize();
+// scene.add(light);
+var light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(0, -4, 4).normalize();
 scene.add(light);
 
 //===================================================== resize
@@ -63,7 +61,7 @@ function init() {
             opacity: 0,
             yPercent: 5,
             onUpdate: function () {
-                console.log("do a flip");
+                // console.log("do a flip");
                 if (model) model.rotation.y += 0.05;
             },
             scrollTrigger: {
