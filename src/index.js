@@ -16,9 +16,9 @@ camera.position.z = 5;
 camera.position.y = 0;
 
 //===================================================== lights
-// var light = new THREE.DirectionalLight(0xefefff, 3);
-// light.position.set(1, 1, 1).normalize();
-// scene.add(light);
+var light2 = new THREE.DirectionalLight(0xefefff, 1);
+light2.position.set(-4, 4, 0).normalize();
+scene.add(light2);
 var light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(0, -4, 4).normalize();
 scene.add(light);
@@ -36,7 +36,8 @@ window.addEventListener("resize", function () {
 var loader = new THREE.GLTFLoader();
 var mixer;
 var model;
-loader.load("https://assets.codepen.io/246465/smaller.gltf", function (gltf) {
+// loader.load("https://assets.codepen.io/246465/smaller.gltf", function (gltf) {
+loader.load("./v3.gltf", function (gltf) {
     gltf.scene.traverse(function (node) {
         if (node instanceof THREE.Mesh) {
             node.castShadow = true;
