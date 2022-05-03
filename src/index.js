@@ -60,13 +60,13 @@ function init() {
     sections.forEach((section) => {
         gsap.from(section, {
             opacity: 0,
-            yPercent: 5,
+            yPercent: 25,
             onUpdate: function () {
-                // console.log("do a flip");
+                console.log("do a flip");
                 if (model) model.rotation.y += 0.05;
             },
             scrollTrigger: {
-                trigger: section.querySelector("h1"),
+                trigger: section.querySelector("img"),
                 start: "top bottom-=200",
                 end: "top center",
                 toggleActions: "restart none reverse none",
