@@ -1,55 +1,162 @@
 console.clear();
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.113.2/build/three.module.js";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.113.0/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.113.0/examples/jsm/loaders/GLTFLoader.js";
 
-//====================================================== canvas
+import * as dat from "https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js";
 
-const model1 = document.querySelector("#model1");
-var renderer = new THREE.WebGLRenderer({ alpha: true, antialiase: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-model1.appendChild(renderer.domElement);
+/** * Loaders */
+const gltfLoader = new GLTFLoader();
+const cubeTextureLoader = new THREE.CubeTextureLoader();
+// Debug
+const gui = new dat.GUI();
+const debugObject = {};
 
-//===================================================== scene
-var scene = new THREE.Scene();
+// Canvas
+const canvas = document.querySelector("canvas.webgl");
 
-//===================================================== camera
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
-camera.position.y = 0;
+// Scene
+const scene = new THREE.Scene();
 
-//===================================================== lights
-var light2 = new THREE.DirectionalLight(0xefefff, 1);
-light2.position.set(-4, 4, 0).normalize();
-scene.add(light2);
-var light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(0, -4, 4).normalize();
-scene.add(light);
-
-//===================================================== resize
-window.addEventListener("resize", function () {
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-});
-
-//===================================================== model
-var loader = new THREE.GLTFLoader();
-var mixer;
-var model;
-// loader.load("https://assets.codepen.io/246465/smaller.gltf", function (gltf) {
-loader.load("./v3.gltf", function (gltf) {
-    gltf.scene.traverse(function (node) {
-        if (node instanceof THREE.Mesh) {
-            node.castShadow = true;
-            node.material.side = THREE.DoubleSide;
+// @@@@@@@@ UPDATE MATS @@@@@@@@
+const updateAllMaterials = () => {
+    scene.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
+            // child.material.envMap = environmentMap
+            child.material.envMapIntensity = debugObject.envMapIntensity;
+            child.castShadow = true;
+            child.receiveShadow = true;
         }
     });
+};
 
+/**
+ * Environment map
+ */
+const environmentMap = cubeTextureLoader.load([
+    "./02.jpg", //
+    "./03.jpg", //
+    "./04.jpg", //
+    "./05.jpg", //
+    "./00.jpg", //
+    "./01.jpg",
+]); //
+//pos-x, neg-x, pos-y, neg-y, pos-z, neg-z.
+// skybox_image_000.tif - Front (+Z)
+// skybox_image_001.tif - Back (-Z)
+// skybox_image_002.tif - Left (+X)
+// skybox_image_003.tif - Right (-X)
+// skybox_image_004.tif - Up (+Y)
+// skybox_image_005.tif - Down (-Y)
+
+environmentMap.encoding = THREE.sRGBEncoding;
+
+scene.background = environmentMap;
+scene.environment = environmentMap;
+
+debugObject.envMapIntensity = 2.5;
+gui.add(debugObject, "envMapIntensity").min(0).max(10).step(0.001).onChange(updateAllMaterials);
+
+/** * Models */
+var model;
+
+// gltfLoader.load("https://raw.githubusercontent.com/a-ortega04/ojo.gltf/main/ojo%20gltf/scene.gltf",
+gltfLoader.load("./v3.gltf", (gltf) => {
+    gltf.scene.scale.set(0.75, 0.75, 0.75);
+    gltf.scene.position.set(0, 0, 0);
+    // gltf.scene.rotation.y = Math.PI * 0.5;
+    scene.add(gltf.scene);
+
+    gui.add(gltf.scene.rotation, "y").min(-Math.PI).max(Math.PI).step(0.001).name("rotation");
+
+    updateAllMaterials();
     model = gltf.scene;
-    model.scale.set(0.75, 0.75, 0.75);
-    scene.add(model);
 });
 
+// @@@@@@@@@ LIGHTS @@@@@@@@@
+const directionalLight = new THREE.DirectionalLight("#ffffff", 3);
+directionalLight.castShadow = true;
+directionalLight.shadow.camera.far = 15;
+directionalLight.shadow.mapSize.set(512, 512);
+directionalLight.shadow.normalBias = 0.05;
+directionalLight.position.set(5, 0.3, 0.075);
+scene.add(directionalLight);
+
+gui.add(directionalLight, "intensity").min(0).max(10).step(0.001).name("lightIntensity");
+gui.add(directionalLight.position, "x").min(-5).max(5).step(0.001).name("lightX");
+gui.add(directionalLight.position, "y").min(-5).max(5).step(0.001).name("lightY");
+gui.add(directionalLight.position, "z").min(-5).max(5).step(0.001).name("lightZ");
+
+// @@@@@@@@@ SIZES @@@@@@@@@
+const sizes = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+};
+
+window.addEventListener("resize", () => {
+    // Update sizes
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+
+    // Update camera
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+
+    // Update renderer
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+
+// @@@@@@@@@ CAM @@@@@@@@@
+const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100);
+camera.position.set(0, 0, 8);
+scene.add(camera);
+
+// Controls
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+
+// @@@@@@@@@ RENDERER @@@@@@@@@
+const renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    antialias: true,
+});
+renderer.physicallyCorrectLights = true;
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ReinhardToneMapping;
+renderer.toneMappingExposure = 2.3;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// @@@@@@@@@ GUI @@@@@@@@@
+gui.add(renderer, "toneMapping", {
+    No: THREE.NoToneMapping,
+    Linear: THREE.LinearToneMapping,
+    Reinhard: THREE.ReinhardToneMapping,
+    Cineon: THREE.CineonToneMapping,
+    ACESFilmic: THREE.ACESFilmicToneMapping,
+});
+gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
+
+// @@@@@@@@@ ANIMATE @@@@@@@@@
+const tick = () => {
+    // Update controls
+    // controls.update();
+
+    // Render
+    renderer.render(scene, camera);
+    if (model) model.rotation.x += 0.0015;
+
+    // Call tick again on the next frame
+    window.requestAnimationFrame(tick);
+};
+
+tick();
+
+//@@@@@@@@@@@@@@@@@@@@@@@@scroll trigger@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@scroll trigger@@@@@@@@@@@@@@@@@@@@@@
 //@@@@@@@@@@@@@@@@@@@@@@@@scroll trigger@@@@@@@@@@@@@@@@@@@@@@
 gsap.registerPlugin(ScrollTrigger);
 
