@@ -1,15 +1,15 @@
 console.clear();
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.113.2/build/three.module.js";
-import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.113.0/examples/jsm/controls/OrbitControls.js";
+// import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.113.0/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.113.0/examples/jsm/loaders/GLTFLoader.js";
 
-import * as dat from "https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js";
+// import * as dat from "https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js";
 
 /** * Loaders */
 const gltfLoader = new GLTFLoader();
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 const debugObject = {};
 
 // Canvas
@@ -51,11 +51,11 @@ const environmentMap = cubeTextureLoader.load([
 
 environmentMap.encoding = THREE.sRGBEncoding;
 
-scene.background = environmentMap;
+// scene.background = environmentMap;
 scene.environment = environmentMap;
 
 debugObject.envMapIntensity = 2.5;
-gui.add(debugObject, "envMapIntensity").min(0).max(10).step(0.001).onChange(updateAllMaterials);
+// gui.add(debugObject, "envMapIntensity").min(0).max(10).step(0.001).onChange(updateAllMaterials);
 
 /** * Models */
 var model;
@@ -67,7 +67,7 @@ gltfLoader.load("./v3.gltf", (gltf) => {
     // gltf.scene.rotation.y = Math.PI * 0.5;
     scene.add(gltf.scene);
 
-    gui.add(gltf.scene.rotation, "y").min(-Math.PI).max(Math.PI).step(0.001).name("rotation");
+    // gui.add(gltf.scene.rotation, "y").min(-Math.PI).max(Math.PI).step(0.001).name("rotation");
 
     updateAllMaterials();
     model = gltf.scene;
@@ -82,10 +82,10 @@ directionalLight.shadow.normalBias = 0.05;
 directionalLight.position.set(5, 0.3, 0.075);
 scene.add(directionalLight);
 
-gui.add(directionalLight, "intensity").min(0).max(10).step(0.001).name("lightIntensity");
-gui.add(directionalLight.position, "x").min(-5).max(5).step(0.001).name("lightX");
-gui.add(directionalLight.position, "y").min(-5).max(5).step(0.001).name("lightY");
-gui.add(directionalLight.position, "z").min(-5).max(5).step(0.001).name("lightZ");
+// gui.add(directionalLight, "intensity").min(0).max(10).step(0.001).name("lightIntensity");
+// gui.add(directionalLight.position, "x").min(-5).max(5).step(0.001).name("lightX");
+// gui.add(directionalLight.position, "y").min(-5).max(5).step(0.001).name("lightY");
+// gui.add(directionalLight.position, "z").min(-5).max(5).step(0.001).name("lightZ");
 
 // @@@@@@@@@ SIZES @@@@@@@@@
 const sizes = {
@@ -120,7 +120,9 @@ scene.add(camera);
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true,
+    alpha: true,
 });
+renderer.setClearColor(0x000000, 0);
 renderer.physicallyCorrectLights = true;
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.toneMapping = THREE.ReinhardToneMapping;
@@ -131,14 +133,14 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // @@@@@@@@@ GUI @@@@@@@@@
-gui.add(renderer, "toneMapping", {
-    No: THREE.NoToneMapping,
-    Linear: THREE.LinearToneMapping,
-    Reinhard: THREE.ReinhardToneMapping,
-    Cineon: THREE.CineonToneMapping,
-    ACESFilmic: THREE.ACESFilmicToneMapping,
-});
-gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
+// gui.add(renderer, "toneMapping", {
+//     No: THREE.NoToneMapping,
+//     Linear: THREE.LinearToneMapping,
+//     Reinhard: THREE.ReinhardToneMapping,
+//     Cineon: THREE.CineonToneMapping,
+//     ACESFilmic: THREE.ACESFilmicToneMapping,
+// });
+// gui.add(renderer, "toneMappingExposure").min(0).max(10).step(0.001);
 
 // @@@@@@@@@ ANIMATE @@@@@@@@@
 const tick = () => {
