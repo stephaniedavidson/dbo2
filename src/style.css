@@ -21,8 +21,9 @@ body {
 }
 
 section {
+  letter-spacing: -1px;
   font-size: 1rem;
-  height: 110vh;
+  height: 100vh;
   position: relative;
   width: 100%;
   display: -webkit-box;
@@ -52,67 +53,41 @@ section .title {
 }
 
 section .text {
+  padding: 1rem;
+  -webkit-column-count: 2;
+          column-count: 2;
+  font-size: 2rem;
+  font-weight: bold;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  width: 100%;
-  height: 100%;
-  max-height: 100vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
 }
 
-section .text .desktop {
-  display: none;
+section .text h1 {
+  font-size: 6rem;
 }
 
-@media (min-width: 1200px) {
-  section .text .desktop {
-    display: block;
+section .text h3 {
+  text-decoration: underline;
+  font-size: 2rem;
+}
+
+section .text ul {
+  list-style-image: url("bullet.gif");
+}
+
+section .text ul li {
+  margin-left: 2rem;
+}
+
+@media (max-width: 900px) {
+  section .text {
+    -webkit-column-count: 1;
+            column-count: 1;
   }
-}
-
-section .text .square {
-  display: none;
-}
-
-@media (max-width: 1200px) {
-  section .text .square {
-    display: block;
-  }
-}
-
-@media (max-width: 700px) {
-  section .text .square {
-    display: none;
-  }
-}
-
-section .text .mobile {
-  display: none;
-}
-
-@media (max-width: 700px) {
-  section .text .mobile {
-    display: block;
-  }
-}
-
-section .text img {
-  max-height: 100vh;
-  width: 100%;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
 }
 
 #model1 {

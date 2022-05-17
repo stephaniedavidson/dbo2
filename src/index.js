@@ -169,13 +169,13 @@ function init() {
     sections.forEach((section) => {
         gsap.from(section, {
             opacity: 0,
-            yPercent: 25,
+            // yPercent: 25,
             onUpdate: function () {
                 console.log("do a flip");
                 if (model) model.rotation.y += 0.05;
             },
             scrollTrigger: {
-                trigger: section.querySelector("img"),
+                trigger: section.querySelector("h1"),
                 start: "top bottom-=200",
                 end: "top center",
                 toggleActions: "restart none reverse none",
@@ -193,7 +193,6 @@ function render() {
     requestAnimationFrame(render);
     var delta = clock.getDelta();
     if (model) model.rotation.x += 0.0015;
-    // if (model) model.rotation.y += 0.0015;
     renderer.render(scene, camera);
 }
 
