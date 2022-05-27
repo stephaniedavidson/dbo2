@@ -4,10 +4,19 @@
 }
 
 * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+@media (max-width: 500px) {
+  html {
+    font-size: 40%;
+  }
 }
 
 body {
@@ -23,24 +32,15 @@ body {
 section {
   letter-spacing: -1px;
   font-size: 1rem;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
   color: white;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 section .title {
@@ -54,16 +54,11 @@ section .title {
 
 section .text {
   padding: 1rem;
-  -webkit-column-count: 2;
-          column-count: 2;
+  column-count: 2;
   font-size: 2rem;
   font-weight: bold;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  -webkit-backdrop-filter: blur(4px);
-          backdrop-filter: blur(4px);
+  user-select: none;
+  backdrop-filter: blur(4px);
 }
 
 section .text h1 {
@@ -84,9 +79,20 @@ section .text ul li {
 }
 
 @media (max-width: 900px) {
+  section .text ul li {
+    margin-left: 4rem;
+  }
+}
+
+@media (max-width: 900px) {
   section .text {
-    -webkit-column-count: 1;
-            column-count: 1;
+    column-count: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  section .text {
+    width: 100%;
   }
 }
 
