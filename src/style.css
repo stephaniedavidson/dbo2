@@ -15,7 +15,13 @@ html {
 
 @media (max-width: 500px) {
   html {
-    font-size: 40%;
+    font-size: 55%;
+  }
+}
+
+@media (max-width: 420px) {
+  html {
+    font-size: 46%;
   }
 }
 
@@ -54,12 +60,7 @@ section .title {
 
 section .text {
   width: 100%;
-  padding: 2rem;
-  color: #b8b8b8;
-  column-count: 3;
-  font-size: 2rem;
-  font-weight: bold;
-  user-select: none;
+  display: flex;
   backdrop-filter: blur(5px);
 }
 
@@ -69,45 +70,68 @@ section .text h3 {
   color: white;
 }
 
-section .text h1 {
-  font-size: 6rem;
-}
-
 section .text h3 {
   text-decoration: underline;
   font-size: 2rem;
   margin-top: 1rem;
 }
 
-section .text ul {
+section .text .title {
+  width: 100px;
+  transform: rotate(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section .text .title h1 {
+  position: relative;
+  text-align: center;
+  display: block;
+  font-size: 5rem;
+  line-height: 5rem;
+  color: white;
+  writing-mode: vertical-lr;
+}
+
+section .text .info {
+  column-count: 3;
+  font-size: 2rem;
+  font-weight: bold;
+  user-select: none;
+  padding: 2rem;
+  color: #b8b8b8;
+}
+
+section .text .info ul {
   text-shadow: -2px 2px rgba(0, 0, 0, 0.15);
   list-style-image: url("bullet.gif");
 }
 
-section .text ul li {
+section .text .info ul li {
   margin-left: 2rem;
 }
 
 @media (max-width: 900px) {
-  section .text ul li {
+  section .text .info ul li {
     margin-left: 4rem;
   }
 }
 
 @media (max-width: 1600px) {
-  section .text {
+  section .text .info {
     column-count: 2;
   }
 }
 
 @media (max-width: 900px) {
-  section .text {
+  section .text .info {
     column-count: 1;
   }
 }
 
 @media (max-width: 600px) {
-  section .text {
+  section .text .info {
     width: 100%;
   }
 }
