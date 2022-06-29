@@ -53,12 +53,20 @@ section .title {
 }
 
 section .text {
-  padding: 1rem;
-  column-count: 2;
+  width: 100%;
+  padding: 2rem;
+  color: #b8b8b8;
+  column-count: 3;
   font-size: 2rem;
   font-weight: bold;
   user-select: none;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(5px);
+}
+
+section .text h1,
+section .text h2,
+section .text h3 {
+  color: white;
 }
 
 section .text h1 {
@@ -68,9 +76,11 @@ section .text h1 {
 section .text h3 {
   text-decoration: underline;
   font-size: 2rem;
+  margin-top: 1rem;
 }
 
 section .text ul {
+  text-shadow: -2px 2px rgba(0, 0, 0, 0.15);
   list-style-image: url("bullet.gif");
 }
 
@@ -81,6 +91,12 @@ section .text ul li {
 @media (max-width: 900px) {
   section .text ul li {
     margin-left: 4rem;
+  }
+}
+
+@media (max-width: 1600px) {
+  section .text {
+    column-count: 2;
   }
 }
 

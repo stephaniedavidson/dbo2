@@ -44,15 +44,24 @@ section {
         line-height: 1.1;
     }
     .text {
-        padding: 1rem;
+        width: 100%;
+        padding: 2rem;
+        color: #b8b8b8;
+        h1,
+        h2,
+        h3 {
+            color: white;
+        }
         h1 {
             font-size: 6rem;
         }
         h3 {
             text-decoration: underline;
             font-size: 2rem;
+            margin-top: 1rem;
         }
         ul {
+            text-shadow: -2px 2px rgba(0, 0, 0, 0.15);
             list-style-image: url("bullet.gif");
             li {
                 margin-left: 2rem;
@@ -61,11 +70,14 @@ section {
                 }
             }
         }
-        column-count: 2;
+        column-count: 3;
         font-size: 2rem;
         font-weight: bold;
         user-select: none;
-        backdrop-filter: blur(4px);
+        backdrop-filter: blur(5px);
+        @media (max-width: 1600px) {
+            column-count: 2;
+        }
         @media (max-width: 900px) {
             column-count: 1;
         }
