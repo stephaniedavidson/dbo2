@@ -100,7 +100,7 @@ section .text .info {
   font-weight: bold;
   user-select: none;
   padding: 2rem;
-  color: #b8b8b8;
+  color: #fff;
 }
 
 section .text .info ul {
