@@ -6,7 +6,23 @@ import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.113.0/examples/
 // import * as dat from "https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js";
 
 /** * Loaders */
-const gltfLoader = new GLTFLoader();
+
+const progressBar = document.getElementById("progressbar");
+const progressBarWrapper = document.getElementById("progressbarwrapper");
+const loadingManager = new THREE.LoadingManager();
+loadingManager.onStart = function (url, item, total) {
+    console.log(`Started ${url}`);
+};
+
+loadingManager.onProgress = function (url, loaded, total) {
+    progressBar.value = (loaded / total) * 100;
+};
+
+loadingManager.onLoad = function (url, item, total) {
+    progressBarWrapper.style.display = "none";
+};
+
+const gltfLoader = new GLTFLoader(loadingManager);
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 // Debug
 // const gui = new dat.GUI();

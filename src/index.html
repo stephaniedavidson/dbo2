@@ -6,6 +6,11 @@
         <title>DBO is a recording studio in Manhattan</title>
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content=""/>
+        <meta property="og:description" content="DBO is a recording studio in Manhattan" />
+        <meta property="og:image" content="https://example.com/image.jpg"/>
+        <meta property="og:url" content="https://example.com" />
+        <meta property="og:type" content="website" />
         <link rel="stylesheet" href="./style.css" />
     </head>
     <body>
@@ -31,7 +36,10 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet" />
 
-        <!-- <div id="model1"></div> -->
+        <div id="progressbarwrapper">
+            <label for="progressbar">Loading...</label>
+            <progress id="progressbar" value="0" max="100"></progress>
+        </div>
         <canvas class="webgl" id="model1"></canvas>
 
         <section>
